@@ -33,9 +33,19 @@ Even though the GSS is suitable for the research questions, it has some drawback
 
 ## Model
 
-To explore factors influncing Canadians' life satisfaction, we built a multiple linear regression model. Multiple linear regression model can help to identify the influences of multiple variables on a specific prediction variable. A standard multiple linear regression model looks like this: $$y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \cdots + \beta_{k}x_{ki} + \epsilon_{i} $$
+To explore factors influncing Canadians' life satisfaction, we built a multiple linear regression model. Multiple linear regression model can help to identify the influences of multiple variables on a specific prediction variable. For example, if we want to use a multiple linear regression model to estimate this: $$y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \cdots + \beta_{k}x_{ki} + \epsilon_{i} $$
 
-In this case, we used variables including age, gender, family incomes, number of children, number of marriages, self rated health, self rated mental health, and whether living with a parter, to predict people's life satisfaction.
+The multiple linear regression model should be: $$\hat{y} = b_{0} + b{1}x_{1} + b{2}x_{2} + \cdots + b_{k}x_{k}$$
+
+Here, we use $b_{0} + b{1}x_{1} + b{2}x_{2} + \cdots + b_{k}x_{k}$ to predict $y_{i}$, so we use $\hat{y}$ to represent the prediction of $y_{i}$. Besides, $b_{0}$ is the intercept of the model, while $b_{1}, b_{2}, \dots,b_{k}$ refer to slopes corresponding to certain variables. 
+
+In this case, we used variables including age, gender, family incomes, number of children, number of marriages, self rated health, self rated mental health, and whether living with a parter, to predict people's life satisfaction. Our model looks like this:$$\hat{Life Satisfaction} = b_{0} + b_{1}{Age} + b_{2}{Gender} + b_{3}{Family Income} + $$
+$$b_{4}{Children Numbers} + b_{5}{Marriage Numbers} + b_{6}{Self Rated Health} +$$
+$$b_{7}{Self Rated Mental Health} + b_{8}{Living with a Partner} $$
+
+Here, the intercept $b_{0}$ means that if all variables are 0, then life satisfaction is expected to be $b_{0}$. The slope, for example, $b_{1}$, means that if all other variables are 0, when age increases for one unit, life satisfaction is expected to increase $b_{1}$. 
+
+In this report, we used R to build the multiple regression model. Also, we regularized the model using the finite population correction factor. The data were collected without replacement, which means that when one person filled the survey, they would no longer be in the pool of selection. In this case, the standard error of each variable will be large and make the result of the model not valid (Glen, 2016). Thus, we included the finite population correction factor in the model, preventing the model from suffering the effect of sampling without replacement. 
 
 ## Results
 

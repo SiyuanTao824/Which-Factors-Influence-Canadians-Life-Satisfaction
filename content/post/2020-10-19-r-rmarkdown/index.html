@@ -33,8 +33,13 @@ tags: ["R Markdown", "plot", "regression"]
 </div>
 <div id="model" class="section level2">
 <h2>Model</h2>
-<p>To explore factors influncing Canadians’ life satisfaction, we built a multiple linear regression model. Multiple linear regression model can help to identify the influences of multiple variables on a specific prediction variable. A standard multiple linear regression model looks like this: <span class="math display">\[y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \cdots + \beta_{k}x_{ki} + \epsilon_{i} \]</span></p>
-<p>In this case, we used variables including age, gender, family incomes, number of children, number of marriages, self rated health, self rated mental health, and whether living with a parter, to predict people’s life satisfaction.</p>
+<p>To explore factors influncing Canadians’ life satisfaction, we built a multiple linear regression model. Multiple linear regression model can help to identify the influences of multiple variables on a specific prediction variable. For example, if we want to use a multiple linear regression model to estimate this: <span class="math display">\[y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \cdots + \beta_{k}x_{ki} + \epsilon_{i} \]</span></p>
+<p>The multiple linear regression model should be: <span class="math display">\[\hat{y} = b_{0} + b{1}x_{1} + b{2}x_{2} + \cdots + b_{k}x_{k}\]</span></p>
+<p>Here, we use <span class="math inline">\(b_{0} + b{1}x_{1} + b{2}x_{2} + \cdots + b_{k}x_{k}\)</span> to predict <span class="math inline">\(y_{i}\)</span>, so we use <span class="math inline">\(\hat{y}\)</span> to represent the prediction of <span class="math inline">\(y_{i}\)</span>. Besides, <span class="math inline">\(b_{0}\)</span> is the intercept of the model, while <span class="math inline">\(b_{1}, b_{2}, \dots,b_{k}\)</span> refer to slopes corresponding to certain variables.</p>
+<p>In this case, we used variables including age, gender, family incomes, number of children, number of marriages, self rated health, self rated mental health, and whether living with a parter, to predict people’s life satisfaction. Our model looks like this:<span class="math display">\[\hat{Life Satisfaction} = b_{0} + b_{1}{Age} + b_{2}{Gender} + b_{3}{Family Income} + \]</span>
+<span class="math display">\[b_{4}{Children Numbers} + b_{5}{Marriage Numbers} + b_{6}{Self Rated Health} +\]</span>
+<span class="math display">\[b_{7}{Self Rated Mental Health} + b_{8}{Living with a Partner} \]</span></p>
+<p>Here, the intercept <span class="math inline">\(b_{0}\)</span> means that if all variables are 0, then life satisfaction is expected to be <span class="math inline">\(b_{0}\)</span>. The slope, for example, <span class="math inline">\(b_{1}\)</span>, means that if all other variables are 0, when age increases for one unit, life satisfaction is expected to increase <span class="math inline">\(b_{1}\)</span>.</p>
 </div>
 <div id="results" class="section level2">
 <h2>Results</h2>
