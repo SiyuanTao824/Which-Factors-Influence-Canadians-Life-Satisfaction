@@ -1,0 +1,59 @@
+---
+title: "Which Factors Influence Canadians' Life Satisfaction?"
+author: "Siyuan Tao"
+date: 2015-07-23T21:13:14-05:00
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+
+<div id="title-of-your-report" class="section level2">
+<h2>Title of your Report</h2>
+</div>
+<div id="siyuan-tao" class="section level1">
+<h1>Siyuan Tao</h1>
+</div>
+<div id="section" class="section level1">
+<h1>2020-10-19</h1>
+<div id="abstract" class="section level2">
+<h2>Abstract</h2>
+<p>Here is where you give a brief (one paragraph overview of your entire paper). This should include some background/introduction, some methodology, results and conclusions.</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Life satisfaction is an extensive term associated with everyone in the world. It is the evaluation of people’s life (Ackerman, 2020). More specifically, it measures whether people feel satisfied with the lives they experienced. There are a variety of studies that tried to reveal the factors that influenced life satisfaction. For example, Baird, Lucas, and Donnellan (2010) found that age was associated with life satisfaction; life satisfaction decreased when people passed their 70s. Another study showed that people’s life satisfaction increased as the household income increased (Frijters, Haisken-DeNew &amp; Shields, 2004).</p>
+<p>However, even though many studies have focused on life satisfaction, few studies have focused on Canada and tested Canadians’ life satisfaction. To fill the gap, this report will analyze factors associated with Canadians’ life satisfaction using the data from the 2017 Canadian General Social Survey (GSS). Based on the comprehensive information from GSS, this report aims to test whether the factors influencing life satisfaction from previous studies could be applied to Canada and explore some other factors linked with Canadians’ life satisfaction.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>The data used in the report comes from the 2017 Canadian General Social Survey (GSS). GSS is a fundamental social survey in Canada. It collects Canadians’ information on a diverse range of scale, including age, sex, income, and health condition (Statistics Canada, 2017). More importantly, the 2017 GSS includes the variable “feelings life,” which is perfectly suitable for the report’s research questions. Because it consists of this comprehensive information about Canadians that allows analyzing the relationship between life satisfaction and other factors, we chose GSS as the primary data to study in the report. There is a summary of the 2017 GSS below.</p>
+<p>The target population of the 2017 Canadian GSS is “all non-institutionalized persons 15 years of age or older, living in the 10 provinces of Canada (Statistics Canada, 2019).” The total Canadian population in 2017 was 36,545,295, the population of ages between 0 to 14 years was 5,912,118 (Statistics Canada, 2020), so the population of people 15 years of age or older was 30,633,177. Thus, we can assume that the target population of the 2017 Canadian GSS is 30,633,177. Besides, the 2017 GSS contains 20,602 observations, which means the sample size of the data is 20,602.</p>
+<p>Even though the GSS is suitable for the research questions, it has some drawbacks. First, the GSS collected data using Computer Assisted Telephone Interviewing (CATI), in which staff call the selected participants and collect information via phones (Statistics Canada, 2017). This way can help save money and energy, but it has some limitations. For example, researchers could only approach people who have phones. These people are usually associated with higher socioeconomic status and better education. Thus, not everyone in the population has the same probability of getting into the study, which may potentially make the result biased. Second, the GSS is usually collected over 6 to 12 months (Statistics Canada, 2017). People may experience different things during this long period, making their answers to the survey limited to timeliness. For example, people may give different answers about their mental health in a different time.</p>
+</div>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<p>To explore factors influncing Canadians’ life satisfaction, we built a multiple linear regression model. Multiple linear regression model can help to identify the influences of multiple variables on a specific prediction variable. A standard multiple linear regression model looks like this: <span class="math display">\[y_{i} = \beta_{0} + \beta_{1}x_{1i} + \beta_{2}x_{2i} + \cdots + \beta_{k}x_{ki} + \epsilon_{i} \]</span></p>
+<p>In this case, we used variables including age, gender, family incomes, number of children, number of marriages, self rated health, self rated mental health, and whether living with a parter, to predict people’s life satisfaction.</p>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<p>Here you will include all results. This includes descriptive statistics, graphs, figures, tables, and model results. Please ensure that everything is well formatted and in a report style. You must also provide an explanation of the results in this section. You can overflow to an Appendix if needed.</p>
+<p>Please ensure that everything is well labelled. So if you have multiple histograms and plots, calling them Figure 1, 2, 3, etc. and referencing them as Figure 1, Figure 2, etc. in your report will be expected. The reader should not get lost in a sea of information. Make sure to have the results be clean, well formatted and digestible.</p>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<p>Here you will discuss conclusions drawn from the results and comment on how it relates to the original goal of the study (which was specified in the Introduction).</p>
+</div>
+</div>
+<div id="weaknesses" class="section level1">
+<h1>Weaknesses</h1>
+<p>Here we discuss weaknesses of the study, data, analysis, etc. You can also discuss areas for improvement.</p>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next Steps</h1>
+<p>Here you discuss subsequent work to be done after this report. This can include next steps in terms of statistical analysis (perhaps there is a more efficient algorithm available, or perhaps there is a caveat in the data that would allow for some new technique). Future steps should also be specified in terms of the study setting (eg. including a follow-up survey on something, or a subsequent study that would complement the conclusions of your report).</p>
+<div id="references" class="section level2">
+<h2>References</h2>
+</div>
+</div>
