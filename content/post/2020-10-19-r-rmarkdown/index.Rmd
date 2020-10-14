@@ -1,9 +1,13 @@
 ---
 title: "Which Factors Influence Canadians' Life Satisfaction?"
 author: "Siyuan Tao"
-date: 2015-07-23T21:13:14-05:00
-categories: ["R"]
-tags: ["R Markdown", "plot", "regression"]
+date: '2015-07-23T21:13:14-05:00'
+output: pdf_document
+tags:
+- R Markdown
+- plot
+- regression
+categories: R
 ---
 
 ```{r setup, include=FALSE}
@@ -77,10 +81,10 @@ ggplot(income, aes(x=`Family Income`, y =Frequency)) + geom_bar(stat="identity")
 Figure 3 shows the distribution of family income level in the sample. Most people' family income were in between \$25,000 and \$75,000. However, there are still a lot people whose family income was greater than \$125,000.
 
 ```{r, echo=FALSE}
-dataGSS %>%
+gss %>%
   count(self_rated_health) %>%
   mutate() -> health
-names(health)[names(healrh) == "self_rated_health"] <- "Health"
+names(health)[names(health) == "self_rated_health"] <- "Health"
 names(health)[names(health) == "n"] <- "Frequency"
 health$`Health` <- factor(health$`Health`, levels = c("Don't know","Poor", "Fair", "Good", "Very good", "Excellent"))
 ggplot(health, aes(x=`Health`, y =Frequency)) + geom_bar(stat="identity") + ggtitle("Figure 4: Distribution of Self Rated Health")
@@ -89,7 +93,7 @@ ggplot(health, aes(x=`Health`, y =Frequency)) + geom_bar(stat="identity") + ggti
 Figure 4 illustrates the distribution of self rated health. Most people rated their health as good and very good, while a few people rated their health as poor.
 
 ```{r, echo=FALSE}
-dataGSS %>%
+gss %>%
   count(self_rated_mental_health) %>%
   mutate() -> mentalhealth
 names(mentalhealth)[names(mentalhealth) == "self_rated_mental_health"] <- "Mental Health"
@@ -134,16 +138,15 @@ By using the model, we can predict a person's life satisfaction based on their i
 + 0.067 * 2 +  0.072 * 1 +0.443 * 1 -2.575 * 1 + 0.091 * 1 $$
 So the expected life satisfaction for the person is $4.1582 $.
 
-
-
-
-Here you will include all results. This includes descriptive statistics, graphs, figures, tables, and model results. Please ensure that everything is well formatted and in a report style. You must also provide an explanation of the results in this section. You can overflow to an Appendix if needed. 
-
-Please ensure that everything is well labelled. So if you have multiple histograms and plots, calling them Figure 1, 2, 3, etc. and referencing them as Figure 1, Figure 2, etc. in your report will be expected. The reader should not get lost in a sea of information. Make sure to have the results be clean, well formatted and digestible.
-
 ## Discussion
 
-Here you will discuss conclusions drawn from the results and comment on how it relates to the original goal of the study (which was specified in the Introduction).
+This report analyzes the 2017 GSS data to reveal the relationships between Canadians' life satisfaction and some other variables such as age, gender, family income, number of children, number of marriages, self-rated health and mental health, and company with a partner. This report built a multiple linear regression model to predict Canadians' life satisfaction using these variables. In this multiple linear regression model, we found that almost all these variables are significant, which means they strongly correlated with life satisfaction. Thus, we can use this model and these variables to predict Canadians' life satisfaction. Some categories of these variables did not show this significant relationship, such as "Fair" in the variable Health, and "Good" in the variable Mental Health. However, we cannot merely drop these insignificant categories because we need to see the categorical variable as a whole. Thus, we chose to keep all of these variables in the model, as most categories of a categorical variable are significant in the model. 
+
+When looking at each variable's slope in the model, most of them make sense in real-life scenarios. For example, when family income is above \$125,000, the slope is positive. However, when family income is below \$125,000, the slope is negative. Also, when family income decreases, the slope decreases, leading to a lower life satisfaction score. This corresponds to Frijters, Haisken-DeNew, and Shields (2004), indicating that higher family income is also associated with higher life satisfaction in Canada. However, the slope of age is positive, which means that life satisfaction will also increase when age increases. This contradicts Baird, Lucas, and Donnellan (2010). One possible reason this contradiction happens is that we focused on the age as a whole and did not separate the data based on the age 70s. Hence, it is less likely to see a decreasing life satisfaction trend with age in our model. 
+
+For the variables health and mental health, it is understandable that better health and mental health conditions have positive slopes, so they are associated with higher life satisfaction. On the other hand, worse health and mental health conditions have negative slopes, which means they are associated with lower life satisfaction. More specifically, poor mental health will lower life satisfaction much more than poor health condition. In the model, the slope of poor health is $ -0.760$, which means poor health will decrease life satisfaction score by 0.760. However, the slope of poor mental health is $-2.575$, which means poor mental health will drop life satisfaction by 2.575. This suggests that mental health conditions play a much more critical role in determining people's life satisfaction than we think before.  
+
+Both living with a partner and numbers of children have positive slopes, meaning that they are associated with better life satisfaction. One plausible explanation is that humans are social animals. When accompanied by a family member in their lives, people tend to feel more positive and be more satisfied with life. For the variable gender, we found that males are associated with lower life satisfaction. Besides, the slope of numbers of marriages is positive, suggesting that people with more marriages tend to have higher life satisfaction scores.
 
 # Weaknesses
 
