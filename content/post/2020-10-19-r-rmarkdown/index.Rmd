@@ -51,7 +51,56 @@ In this report, we used the language **R** to build the multiple regression mode
 
 ## Results
 
-The summary of the multiple linear regression is presented below:
+```{r, echo=FALSE}
+hist(gss$feelings_life, main="Figure 1: Frequency Distribution of Life Satisfaction", xlab="Life Satisfaction", col="grey", breaks = 10)
+```
+
+To begin with, there are some figures describing the distribution of some major variables in the model independently. 
+Figure 1 shows the frequency distribution of Canadians' life satisfaction. This is a negative skewed distribution, where most people had high rates about their life satisfaction while a few people had low rate.
+
+```{r, echo=FALSE}
+hist(gss$age, main="Figure 2: Frequency Distribution of Age", xlab="age", col="grey", breaks = 5)
+```
+
+Figure 2 demonstrates the distribution of age in the 2017 GSS. It is clear that most people who did this survey were over 50 years old. Also, even though the target population of the survey is people over 15 years old, only a few people between 10 to 20 years old participated in the survey.
+
+```{r, echo=FALSE}
+gss %>%
+  count(income_family) %>%
+  mutate() -> income
+names(income)[names(income) == "income_family"] <- "Family Income"
+names(income)[names(income) == "n"] <- "Frequency"
+income$`Family Income` <- factor(income$`Family Income`, levels = c("Less than $25,000", "$25,000 to $49,999", "$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $ 124,999","$125,000 and more"))
+ggplot(income, aes(x=`Family Income`, y =Frequency)) + geom_bar(stat="identity") + ggtitle("Figure 3: Distribution of Family Income")
+```
+
+Figure 3 shows the distribution of family income level in the sample. Most people' family income were in between \$25,000 and \$75,000. However, there are still a lot people whose family income was greater than \$125,000.
+
+```{r, echo=FALSE}
+dataGSS %>%
+  count(self_rated_health) %>%
+  mutate() -> health
+names(health)[names(healrh) == "self_rated_health"] <- "Health"
+names(health)[names(health) == "n"] <- "Frequency"
+health$`Health` <- factor(health$`Health`, levels = c("Don't know","Poor", "Fair", "Good", "Very good", "Excellent"))
+ggplot(health, aes(x=`Health`, y =Frequency)) + geom_bar(stat="identity") + ggtitle("Figure 4: Distribution of Self Rated Health")
+```
+
+Figure 4 illustrates the distribution of self rated health. Most people rated their health as good and very good, while a few people rated their health as poor.
+
+```{r, echo=FALSE}
+dataGSS %>%
+  count(self_rated_mental_health) %>%
+  mutate() -> mentalhealth
+names(mentalhealth)[names(mentalhealth) == "self_rated_mental_health"] <- "Mental Health"
+names(mentalhealth)[names(mentalhealth) == "n"] <- "Frequency"
+mentalhealth$`Mental Health` <- factor(mentalhealth$`Mental Health`, levels = c("Don't know","Poor", "Fair", "Good", "Very good", "Excellent"))
+ggplot(mentalhealth, aes(x=`Mental Health`, y =Frequency)) + geom_bar(stat="identity") + ggtitle("Figure 5: Distribution of Self Rated Mental Health")
+```
+
+Figure 5 shows the distribution of self rated mental health. Most people rated their mental health as good, very good, and excellent. A few people rated their mental health as poor and fair. 
+
+The next part is the summary of the linear regression model:
 ```{r , echo=FALSE, message=FALSE, warning=FALSE}
 # Import required packages
 library(survey)
@@ -81,9 +130,12 @@ $$ +0.443{Good Health} +0.080{FairHealt}  -0.760{PoorHealth} $$
 $$+ 0.679{ExcellentMental} + 0.224{VeryGoodMental} - 0.261{GoodMental}  $$
 $$ - 1.289{FairMental}-2.575{PoorMental} + 0.091{Live With Partner} $$
 
-By using the model, we can predict a person's life satisfaction based on their information. For example, if a 40-year-old male has 2 children, 1 marriage, lives with his partner, and rates himself as "good health" and "poor mental health," and the family income is in between \$75,000 and \$99,999, then the person's expected life satisfaction based on the model is:  $$\hat{Life Satisfaction} = 7.200 + 0.006 * 40 - 0.102 * 1 -0.106 * 1  + 0.067 * 2 +  0.072 * 1 $$
-$$+0.443 * 1 -2.575 * 1 + 0.091 * 1 $$
-$$ = 4.1582
+By using the model, we can predict a person's life satisfaction based on their information. For example, if a 40-year-old male has 2 children, 1 marriage, lives with his partner, and rates himself as "good health" and "poor mental health," and the family income is in between \$75,000 and \$99,999, then the person's expected life satisfaction based on the model is:  $$\hat{Life Satisfaction} = 7.200 + 0.006 * 40 - 0.102 * 1 -0.106 * 1 
++ 0.067 * 2 +  0.072 * 1 +0.443 * 1 -2.575 * 1 + 0.091 * 1 $$
+So the expected life satisfaction for the person is $4.1582 $.
+
+
+
 
 Here you will include all results. This includes descriptive statistics, graphs, figures, tables, and model results. Please ensure that everything is well formatted and in a report style. You must also provide an explanation of the results in this section. You can overflow to an Appendix if needed. 
 
