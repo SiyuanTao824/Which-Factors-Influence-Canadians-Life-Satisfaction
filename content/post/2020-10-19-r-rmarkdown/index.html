@@ -1,11 +1,3 @@
----
-title: "Which Factors Influence Canadians' Life Satisfaction?"
-author: "Siyuan Tao"
-date: 2015-07-23T21:13:14-05:00
-categories: ["R"]
-tags: ["R Markdown", "plot", "regression"]
----
-
 
 
 <div id="title-of-your-report" class="section level2">
@@ -38,12 +30,60 @@ tags: ["R Markdown", "plot", "regression"]
 <p>Here, we use <span class="math inline">\(b_{0} + b{1}x_{1} + b{2}x_{2} + \cdots + b_{k}x_{k}\)</span> to predict <span class="math inline">\(y_{i}\)</span>, so we use <span class="math inline">\(\hat{y}\)</span> to represent the prediction of <span class="math inline">\(y_{i}\)</span>. Besides, <span class="math inline">\(b_{0}\)</span> is the intercept of the model, while <span class="math inline">\(b_{1}, b_{2}, \dots,b_{k}\)</span> refer to slopes corresponding to certain variables.</p>
 <p>In this case, we used variables including age, gender, family incomes, number of children, number of marriages, self rated health, self rated mental health, and whether living with a parter, to predict people’s life satisfaction. Our model looks like this:<span class="math display">\[\hat{Life Satisfaction} = b_{0} + b_{1}{Age} + b_{2}{Gender} + b_{3}{Family Income} + \]</span>
 <span class="math display">\[b_{4}{Children Numbers} + b_{5}{Marriage Numbers} + b_{6}{Self Rated Health} +\]</span>
-<span class="math display">\[b_{7}{Self Rated Mental Health} + b_{8}{Living with a Partner} \]</span></p>
+<span class="math display">\[b_{7}{Self Rated Mental Health} + b_{8}{Living with  Partner} \]</span></p>
 <p>Here, the intercept <span class="math inline">\(b_{0}\)</span> means that if all variables are 0, then life satisfaction is expected to be <span class="math inline">\(b_{0}\)</span>. The slope, for example, <span class="math inline">\(b_{1}\)</span>, means that if all other variables are 0, when age increases for one unit, life satisfaction is expected to increase <span class="math inline">\(b_{1}\)</span>.</p>
+<p>In addition, some variables in the model are categorical variables, which means observations of these variables fall into different categories, and these categories are not continuous like numbers. For example, there are 6 levels of Family Income, which are “Less than $25,000,” “$25,000 to $49,999,” “$50,000 to $74,999,” “$75,000 to $99,999 ,” “$100,000 to $124,999,” and “$125,000 and more.” Similarly, variables of Health and Mental Health are also categorical variables. These two variables both have 6 levels, which are “Don’t Know,” “Poor,” “Fair,” “Good,” “Very Good,” and “Excellent.” Participants will choose the category that best describes them. Some other categorical variables in the model include Gender, and Live with Partner. These two variables only include 2 different categories, which are “Male” or “Female,” and “Yes” or “No,” correspondingly.</p>
+<p>In this report, we used the language <strong>R</strong> to build the multiple regression model. Also, we regularized the model using the finite population correction factor. The data were collected without replacement, which means that when one person filled the survey, they would no longer be in the pool of selection. In this case, the standard error of each variable will be large and make the result of the model not valid (Glen, 2016). Thus, we included the finite population correction factor in the model, preventing the model from suffering the effect of sampling without replacement.</p>
 </div>
 <div id="results" class="section level2">
 <h2>Results</h2>
-<p>Here you will include all results. This includes descriptive statistics, graphs, figures, tables, and model results. Please ensure that everything is well formatted and in a report style. You must also provide an explanation of the results in this section. You can overflow to an Appendix if needed.</p>
+<p>The summary of the multiple linear regression is presented below:</p>
+<pre><code>## 
+## Call:
+## svyglm(formula = feelings_life ~ is_male + age + income_family + 
+##     total_children + number_marriages + self_rated_health + self_rated_mental_health + 
+##     lives_with_partner, design = GSS.design)
+## 
+## Survey design:
+## svydesign(id = ~1, data = gss, fpc = fpc.srs)
+## 
+## Coefficients:
+##                                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                        7.1993831  0.3919708  18.367  &lt; 2e-16 ***
+## is_male                           -0.1023256  0.0197125  -5.191 2.11e-07 ***
+## age                                0.0058462  0.0006901   8.471  &lt; 2e-16 ***
+## income_family$125,000 and more     0.0183002  0.0309469   0.591 0.554299    
+## income_family$25,000 to $49,999   -0.2632558  0.0358750  -7.338 2.25e-13 ***
+## income_family$50,000 to $74,999   -0.1424260  0.0349555  -4.074 4.63e-05 ***
+## income_family$75,000 to $99,999   -0.1064959  0.0352446  -3.022 0.002517 ** 
+## income_familyLess than $25,000    -0.4004592  0.0428345  -9.349  &lt; 2e-16 ***
+## total_children                     0.0669408  0.0084000   7.969 1.68e-15 ***
+## number_marriages                   0.0724040  0.0213647   3.389 0.000703 ***
+## self_rated_healthExcellent         0.8520359  0.2291882   3.718 0.000202 ***
+## self_rated_healthFair              0.0800216  0.2314447   0.346 0.729535    
+## self_rated_healthGood              0.4432535  0.2285272   1.940 0.052441 .  
+## self_rated_healthPoor             -0.7601110  0.2443232  -3.111 0.001867 ** 
+## self_rated_healthVery good         0.6554666  0.2285165   2.868 0.004130 ** 
+## self_rated_mental_healthExcellent  0.6794521  0.3259342   2.085 0.037115 *  
+## self_rated_mental_healthFair      -1.2892707  0.3300810  -3.906 9.42e-05 ***
+## self_rated_mental_healthGood      -0.2612243  0.3259122  -0.802 0.422842    
+## self_rated_mental_healthPoor      -2.5751791  0.3566478  -7.221 5.36e-13 ***
+## self_rated_mental_healthVery good  0.2240933  0.3257603   0.688 0.491518    
+## lives_with_partnerYes              0.0905261  0.0317869   2.848 0.004405 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for gaussian family taken to be 1.9366)
+## 
+## Number of Fisher Scoring iterations: 2</code></pre>
+<p>Based on the summary, we can build the multiple linear regression model to predict Canadians’ life satisfaction: <span class="math display">\[\hat{Life Satisfaction} = 7.200 + 0.006{Age} - 0.102{Male} + 0.018{&lt;$125,000 and more&gt;}  \]</span>
+<span class="math display">\[-0.263{&lt;$25,000 to $49,999&gt;} - 0.142{&lt;$50,000 to $74,999&gt;}  \]</span>
+<span class="math display">\[-0.106{&lt;$75,000 to $99,999&gt;} -0.400{&lt;Less than $25,000&gt;} + 0.067{ChildrenNumbers} \]</span>
+<span class="math display">\[+  0.072{MarriageNumbers} +0.852{ExcellentHealth} +  0.655{VeryGood Health} \]</span>
+<span class="math display">\[ +0.443{Good Health} +0.080{FairHealt}  -0.760{PoorHealth} \]</span>
+<span class="math display">\[+ 0.679{ExcellentMental} + 0.224{VeryGoodMental} - 0.261{GoodMental}  \]</span>
+<span class="math display">\[ - 1.289{FairMental}-2.575{PoorMental} + 0.091{Live With Partner} \]</span>
+Here you will include all results. This includes descriptive statistics, graphs, figures, tables, and model results. Please ensure that everything is well formatted and in a report style. You must also provide an explanation of the results in this section. You can overflow to an Appendix if needed.</p>
 <p>Please ensure that everything is well labelled. So if you have multiple histograms and plots, calling them Figure 1, 2, 3, etc. and referencing them as Figure 1, Figure 2, etc. in your report will be expected. The reader should not get lost in a sea of information. Make sure to have the results be clean, well formatted and digestible.</p>
 </div>
 <div id="discussion" class="section level2">

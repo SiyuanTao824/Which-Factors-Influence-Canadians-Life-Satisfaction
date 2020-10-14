@@ -43,11 +43,47 @@ In this case, we used variables including age, gender, family incomes, number of
 $$b_{4}{Children Numbers} + b_{5}{Marriage Numbers} + b_{6}{Self Rated Health} +$$
 $$b_{7}{Self Rated Mental Health} + b_{8}{Living with a Partner} $$
 
-Here, the intercept $b_{0}$ means that if all variables are 0, then life satisfaction is expected to be $b_{0}$. The slope, for example, $b_{1}$, means that if all other variables are 0, when age increases for one unit, life satisfaction is expected to increase $b_{1}$. 
+Here, the intercept $b_{0}$ means that if all variables are 0, then life satisfaction is expected to be $b_{0}$. The slope, for example, $b_{1}$, means that if all other variables are 0, when age increases for one unit, life satisfaction is expected to increase $b_{1}$.
 
-In this report, we used R to build the multiple regression model. Also, we regularized the model using the finite population correction factor. The data were collected without replacement, which means that when one person filled the survey, they would no longer be in the pool of selection. In this case, the standard error of each variable will be large and make the result of the model not valid (Glen, 2016). Thus, we included the finite population correction factor in the model, preventing the model from suffering the effect of sampling without replacement. 
+In addition, some variables in the model are categorical variables, which means observations of these variables fall into different categories, and these categories are not continuous like numbers. For example, there are 6 levels of Family Income, which are "Less than \$25,000," "\$25,000 to \$49,999," "\$50,000 to \$74,999," "\$75,000 to \$99,999 ," "\$100,000 to \$124,999," and "\$125,000 and more." Similarly, variables of Health and Mental Health are also categorical variables. These two variables both have 6 levels, which are "Don't Know," "Poor," "Fair," "Good," "Very Good," and "Excellent." Participants will choose the category that best describes them. Some other categorical variables in the model include Gender, and Live with Partner. These two variables only include 2 different categories, which are "Male" or "Female," and "Yes" or "No," correspondingly. 
+
+In this report, we used the language **R** to build the multiple regression model. Also, we regularized the model using the finite population correction factor. The data were collected without replacement, which means that when one person filled the survey, they would no longer be in the pool of selection. In this case, the standard error of each variable will be large and make the result of the model not valid (Glen, 2016). Thus, we included the finite population correction factor in the model, preventing the model from suffering the effect of sampling without replacement. 
 
 ## Results
+
+The summary of the multiple linear regression is presented below:
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+# Import required packages
+library(survey)
+library(tidyverse)
+```
+```{r , echo=FALSE}
+# Using population size and sample size to get the population correction factor
+n = 20602
+N=  30633177
+fpc.srs = rep(N, n)
+# Read the 2017 Canadian GSS dataset
+gss <- read.csv("gss.csv")
+GSS.design <- svydesign(id=~1, data=gss, fpc = fpc.srs)
+# Build the multiple linear regression model
+GSSanalysis <- svyglm(feelings_life ~ is_male + age + income_family + total_children + 
+                        number_marriages + self_rated_health + self_rated_mental_health + 
+                        lives_with_partner, GSS.design)
+# Get the summary of the model
+summary(GSSanalysis)
+```
+
+Based on the summary, we can build the multiple linear regression model to predict Canadians' life satisfaction: $$\hat{Life Satisfaction} = 7.200 + 0.006{Age} - 0.102{Male} + 0.018{<$125,000 and more>}  $$
+$$-0.263{<$25,000 to $49,999>} - 0.142{<$50,000 to $74,999>}  $$
+$$-0.106{<$75,000 to $99,999>} -0.400{<Less than $25,000>} + 0.067{ChildrenNumbers} $$
+$$+  0.072{MarriageNumbers} +0.852{ExcellentHealth} +  0.655{VeryGood Health} $$
+$$ +0.443{Good Health} +0.080{FairHealt}  -0.760{PoorHealth} $$
+$$+ 0.679{ExcellentMental} + 0.224{VeryGoodMental} - 0.261{GoodMental}  $$
+$$ - 1.289{FairMental}-2.575{PoorMental} + 0.091{Live With Partner} $$
+
+By using the model, we can predict a person's life satisfaction based on their information. For example, if a 40-year-old male has 2 children, 1 marriage, lives with his partner, and rates himself as "good health" and "poor mental health," and the family income is in between \$75,000 and \$99,999, then the person's expected life satisfaction based on the model is:  $$\hat{Life Satisfaction} = 7.200 + 0.006 * 40 - 0.102 * 1 -0.106 * 1  + 0.067 * 2 +  0.072 * 1 $$
+$$+0.443 * 1 -2.575 * 1 + 0.091 * 1 $$
+$$ = 4.1582
 
 Here you will include all results. This includes descriptive statistics, graphs, figures, tables, and model results. Please ensure that everything is well formatted and in a report style. You must also provide an explanation of the results in this section. You can overflow to an Appendix if needed. 
 
